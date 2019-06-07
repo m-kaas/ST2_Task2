@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ContactsTableViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    ContactsTableViewController *contactsTableVC = [[ContactsTableViewController alloc] initWithNibName:NSStringFromClass([ContactsTableViewController class]) bundle:nil];
+    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:contactsTableVC];
+    navCon.view.backgroundColor = [UIColor whiteColor];
+    [self.window setRootViewController: navCon];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

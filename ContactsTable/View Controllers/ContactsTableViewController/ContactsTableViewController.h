@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ContactsTableViewController.h
 //  ContactsTable
 //
 //  Created by Liubou Sakalouskaya on 6/7/19.
@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+NS_ASSUME_NONNULL_BEGIN
 
+@interface ContactsTableViewController : UIViewController
 
 @end
 
+NS_ASSUME_NONNULL_END

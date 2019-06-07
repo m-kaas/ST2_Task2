@@ -8,24 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		E3FE2F4A22AA6682007159B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F4922AA6682007159B2 /* AppDelegate.m */; };
-		E3FE2F4D22AA6682007159B2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F4C22AA6682007159B2 /* ViewController.m */; };
 		E3FE2F5022AA6682007159B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F4E22AA6682007159B2 /* Main.storyboard */; };
 		E3FE2F5222AA6685007159B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F5122AA6685007159B2 /* Assets.xcassets */; };
 		E3FE2F5522AA6685007159B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F5322AA6685007159B2 /* LaunchScreen.storyboard */; };
 		E3FE2F5822AA6685007159B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F5722AA6685007159B2 /* main.m */; };
+		E3FE2F6022AA66AC007159B2 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3FE2F5F22AA66AC007159B2 /* Contacts.framework */; };
+		E3FE2F6222AA66B2007159B2 /* ContactsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3FE2F6122AA66B2007159B2 /* ContactsUI.framework */; };
+		E3FE2F6622AA681E007159B2 /* ContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F6422AA681E007159B2 /* ContactsTableViewController.m */; };
+		E3FE2F6722AA681E007159B2 /* ContactsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F6522AA681E007159B2 /* ContactsTableViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E3FE2F4522AA6682007159B2 /* ContactsTable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactsTable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3FE2F4822AA6682007159B2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E3FE2F4922AA6682007159B2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E3FE2F4B22AA6682007159B2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		E3FE2F4C22AA6682007159B2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E3FE2F4F22AA6682007159B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E3FE2F5122AA6685007159B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3FE2F5422AA6685007159B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E3FE2F5622AA6685007159B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3FE2F5722AA6685007159B2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E3FE2F5F22AA66AC007159B2 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		E3FE2F6122AA66B2007159B2 /* ContactsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ContactsUI.framework; path = System/Library/Frameworks/ContactsUI.framework; sourceTree = SDKROOT; };
+		E3FE2F6322AA681E007159B2 /* ContactsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactsTableViewController.h; sourceTree = "<group>"; };
+		E3FE2F6422AA681E007159B2 /* ContactsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactsTableViewController.m; sourceTree = "<group>"; };
+		E3FE2F6522AA681E007159B2 /* ContactsTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsTableViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +39,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3FE2F6222AA66B2007159B2 /* ContactsUI.framework in Frameworks */,
+				E3FE2F6022AA66AC007159B2 /* Contacts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +52,7 @@
 			children = (
 				E3FE2F4722AA6682007159B2 /* ContactsTable */,
 				E3FE2F4622AA6682007159B2 /* Products */,
+				E3FE2F5E22AA66AC007159B2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,15 +69,49 @@
 			children = (
 				E3FE2F4822AA6682007159B2 /* AppDelegate.h */,
 				E3FE2F4922AA6682007159B2 /* AppDelegate.m */,
-				E3FE2F4B22AA6682007159B2 /* ViewController.h */,
-				E3FE2F4C22AA6682007159B2 /* ViewController.m */,
+				E3FE2F6922AA696C007159B2 /* View Controllers */,
+				E3FE2F6A22AA6983007159B2 /* Resources */,
+				E3FE2F5722AA6685007159B2 /* main.m */,
+			);
+			path = ContactsTable;
+			sourceTree = "<group>";
+		};
+		E3FE2F5E22AA66AC007159B2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E3FE2F6122AA66B2007159B2 /* ContactsUI.framework */,
+				E3FE2F5F22AA66AC007159B2 /* Contacts.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E3FE2F6822AA694B007159B2 /* ContactsTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E3FE2F6322AA681E007159B2 /* ContactsTableViewController.h */,
+				E3FE2F6422AA681E007159B2 /* ContactsTableViewController.m */,
+				E3FE2F6522AA681E007159B2 /* ContactsTableViewController.xib */,
+			);
+			path = ContactsTableViewController;
+			sourceTree = "<group>";
+		};
+		E3FE2F6922AA696C007159B2 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E3FE2F6822AA694B007159B2 /* ContactsTableViewController */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E3FE2F6A22AA6983007159B2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				E3FE2F4E22AA6682007159B2 /* Main.storyboard */,
 				E3FE2F5122AA6685007159B2 /* Assets.xcassets */,
 				E3FE2F5322AA6685007159B2 /* LaunchScreen.storyboard */,
 				E3FE2F5622AA6685007159B2 /* Info.plist */,
-				E3FE2F5722AA6685007159B2 /* main.m */,
 			);
-			path = ContactsTable;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,6 +173,7 @@
 			files = (
 				E3FE2F5522AA6685007159B2 /* LaunchScreen.storyboard in Resources */,
 				E3FE2F5222AA6685007159B2 /* Assets.xcassets in Resources */,
+				E3FE2F6722AA681E007159B2 /* ContactsTableViewController.xib in Resources */,
 				E3FE2F5022AA6682007159B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,8 +185,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3FE2F4D22AA6682007159B2 /* ViewController.m in Sources */,
 				E3FE2F5822AA6685007159B2 /* main.m in Sources */,
+				E3FE2F6622AA681E007159B2 /* ContactsTableViewController.m in Sources */,
 				E3FE2F4A22AA6682007159B2 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,7 +331,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BPJZ76T894;
-				INFOPLIST_FILE = ContactsTable/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/ContactsTable/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,7 +349,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BPJZ76T894;
-				INFOPLIST_FILE = ContactsTable/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/ContactsTable/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
