@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ContactsTableViewController.h"
+#import "UIColor+ColorFromHex.h"
 
 @interface AppDelegate ()
 
@@ -21,7 +22,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     ContactsTableViewController *contactsTableVC = [[ContactsTableViewController alloc] initWithNibName:NSStringFromClass([ContactsTableViewController class]) bundle:nil];
     UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:contactsTableVC];
-    navCon.view.backgroundColor = [UIColor whiteColor];
+    navCon.navigationBar.barTintColor = [UIColor colorFromHex:0xFFFFFF];
+    navCon.navigationBar.translucent = NO;
+    [navCon.navigationBar setTitleTextAttributes:@{
+                                                   NSForegroundColorAttributeName: [UIColor colorFromHex:0x000000],
+                                                   NSFontAttributeName: [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold]
+                                                   }];
     [self.window setRootViewController: navCon];
     [self.window makeKeyAndVisible];
     return YES;
