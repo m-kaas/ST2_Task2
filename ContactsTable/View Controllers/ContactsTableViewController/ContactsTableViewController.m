@@ -41,6 +41,7 @@ NSString * const cellReuseId = @"reuseId";
     self.contactsTableView.tableFooterView = [UIView new];
     self.contactsTableView.delegate = self;
     self.contactsTableView.dataSource = self;
+    self.contactsTableView.rowHeight = 70;
 }
 
 - (void)loadContacts {
@@ -99,6 +100,15 @@ NSString * const cellReuseId = @"reuseId";
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.contacts removeObjectAtIndex:indexPath.row];
+    [self.contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma mark - UITableViewDataSource
