@@ -18,6 +18,8 @@
 		E3FE2F6722AA681E007159B2 /* ContactsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F6522AA681E007159B2 /* ContactsTableViewController.xib */; };
 		E3FE2F7222ABC963007159B2 /* UIColor+ColorFromHex.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F7122ABC963007159B2 /* UIColor+ColorFromHex.m */; };
 		E3FE2F7622ABF18B007159B2 /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F7522ABF18B007159B2 /* AddressBook.m */; };
+		E3FE2F7C22AC2B17007159B2 /* LetterSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F7B22AC2B17007159B2 /* LetterSectionView.m */; };
+		E3FE2F8022AC2B70007159B2 /* LetterSectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F7F22AC2B70007159B2 /* LetterSectionView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,9 @@
 		E3FE2F7122ABC963007159B2 /* UIColor+ColorFromHex.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorFromHex.m"; sourceTree = "<group>"; };
 		E3FE2F7522ABF18B007159B2 /* AddressBook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressBook.m; sourceTree = "<group>"; };
 		E3FE2F7722ABF1A2007159B2 /* AddressBook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressBook.h; sourceTree = "<group>"; };
+		E3FE2F7A22AC2B17007159B2 /* LetterSectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LetterSectionView.h; sourceTree = "<group>"; };
+		E3FE2F7B22AC2B17007159B2 /* LetterSectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LetterSectionView.m; sourceTree = "<group>"; };
+		E3FE2F7F22AC2B70007159B2 /* LetterSectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LetterSectionView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +80,9 @@
 			children = (
 				E3FE2F4822AA6682007159B2 /* AppDelegate.h */,
 				E3FE2F4922AA6682007159B2 /* AppDelegate.m */,
-				E3FE2F7922ABF1B6007159B2 /* Models */,
 				E3FE2F7322ABC9D9007159B2 /* Categories */,
+				E3FE2F7922ABF1B6007159B2 /* Models */,
+				E3FE2F7E22AC2B24007159B2 /* Views */,
 				E3FE2F6922AA696C007159B2 /* View Controllers */,
 				E3FE2F6A22AA6983007159B2 /* Resources */,
 				E3FE2F5722AA6685007159B2 /* main.m */,
@@ -156,6 +162,24 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		E3FE2F7D22AC2B1B007159B2 /* LetterSectionView */ = {
+			isa = PBXGroup;
+			children = (
+				E3FE2F7A22AC2B17007159B2 /* LetterSectionView.h */,
+				E3FE2F7B22AC2B17007159B2 /* LetterSectionView.m */,
+				E3FE2F7F22AC2B70007159B2 /* LetterSectionView.xib */,
+			);
+			path = LetterSectionView;
+			sourceTree = "<group>";
+		};
+		E3FE2F7E22AC2B24007159B2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E3FE2F7D22AC2B1B007159B2 /* LetterSectionView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -216,6 +240,7 @@
 				E3FE2F5522AA6685007159B2 /* LaunchScreen.storyboard in Resources */,
 				E3FE2F5222AA6685007159B2 /* Assets.xcassets in Resources */,
 				E3FE2F6722AA681E007159B2 /* ContactsTableViewController.xib in Resources */,
+				E3FE2F8022AC2B70007159B2 /* LetterSectionView.xib in Resources */,
 				E3FE2F5022AA6682007159B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,6 +254,7 @@
 			files = (
 				E3FE2F5822AA6685007159B2 /* main.m in Sources */,
 				E3FE2F7222ABC963007159B2 /* UIColor+ColorFromHex.m in Sources */,
+				E3FE2F7C22AC2B17007159B2 /* LetterSectionView.m in Sources */,
 				E3FE2F7622ABF18B007159B2 /* AddressBook.m in Sources */,
 				E3FE2F6622AA681E007159B2 /* ContactsTableViewController.m in Sources */,
 				E3FE2F4A22AA6682007159B2 /* AppDelegate.m in Sources */,

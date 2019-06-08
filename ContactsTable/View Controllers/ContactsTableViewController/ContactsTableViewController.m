@@ -10,13 +10,16 @@
 #import "ContactsTableViewController.h"
 #import "UIColor+ColorFromHex.h"
 #import "AddressBook.h"
+#import "LetterSectionView.h"
 
-NSString * const cellReuseId = @"reuseId";
+NSString * const cellReuseId = @"cellReuseId";
+NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 
-@interface ContactsTableViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ContactsTableViewController () <UITableViewDelegate, UITableViewDataSource, LetterSectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
 @property (strong, nonatomic) AddressBook *addressBook;
+@property (strong, nonatomic) NSMutableArray *sectionsExpanded;
 
 @end
 
@@ -26,6 +29,7 @@ NSString * const cellReuseId = @"reuseId";
     [super viewDidLoad];
     self.navigationItem.title = @"Контакты";
     self.addressBook = [AddressBook new];
+    self.sectionsExpanded = [NSMutableArray array];
     if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
         [self fetchContacts];
     } else {
@@ -39,6 +43,7 @@ NSString * const cellReuseId = @"reuseId";
         }];
     }
     [self.contactsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellReuseId];
+    [self.contactsTableView registerClass:[LetterSectionView class] forHeaderFooterViewReuseIdentifier:sectionHeaderReuseId];
     self.contactsTableView.tableFooterView = [UIView new];
     self.contactsTableView.delegate = self;
     self.contactsTableView.dataSource = self;
@@ -54,6 +59,9 @@ NSString * const cellReuseId = @"reuseId";
                                          usingBlock:^(CNContact * _Nonnull contact, BOOL * _Nonnull stop) {
                                              [self.addressBook addContact:contact];
                                          }];
+    for (int i = 0; i < self.addressBook.numberOfSections; i++) {
+        [self.sectionsExpanded addObject:@YES];
+    }
 }
 
 - (void)showAccessDeniedScreen {
@@ -112,6 +120,14 @@ NSString * const cellReuseId = @"reuseId";
     [self.contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 60;
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    //TODO: present details VC
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -119,11 +135,19 @@ NSString * const cellReuseId = @"reuseId";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.addressBook numberOfContactsInSection:section];
+    return [self.sectionsExpanded[section] boolValue] ? [self.addressBook numberOfContactsInSection:section] : 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.addressBook letterForSection:section];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    LetterSectionView *sectionView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:sectionHeaderReuseId];
+    NSString *letter = [self.addressBook letterForSection:section];
+    sectionView.letterLabel.text = letter;
+    NSString *numberOfContacts = [NSString stringWithFormat:@"контактов: %ld", (long)[self.addressBook numberOfContactsInSection:section]];
+    sectionView.contactsCountLabel.text = numberOfContacts;
+    sectionView.expanded = [self.sectionsExpanded[section] boolValue];
+    sectionView.section = section;
+    sectionView.delegate = self;
+    return sectionView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -146,6 +170,27 @@ NSString * const cellReuseId = @"reuseId";
     cell.textLabel.font = system17RegularFont;
     cell.textLabel.textColor = [UIColor colorFromHex:0x000000];
     return cell;
+}
+
+#pragma mark - LetterSectionViewDelegate
+
+- (void)didTapOnHeader:(LetterSectionView *)sectionView {
+    BOOL wasExpanded = [self.sectionsExpanded[sectionView.section] boolValue];
+    self.sectionsExpanded[sectionView.section] = @(!wasExpanded);
+    sectionView.expanded = !wasExpanded;
+    if (wasExpanded) {
+        NSMutableArray *indexPathsToDelete = [NSMutableArray array];
+        for (int i = 0; i < [self.addressBook numberOfContactsInSection:sectionView.section]; i++) {
+            [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionView.section]];
+        }
+        [self.contactsTableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else {
+        NSMutableArray *indexPathsToInsert = [NSMutableArray array];
+        for (int i = 0; i < [self.addressBook numberOfContactsInSection:sectionView.section]; i++) {
+            [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionView.section]];
+        }
+        [self.contactsTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 @end
