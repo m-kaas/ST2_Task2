@@ -6,16 +6,17 @@
 //  Copyright © 2019 Liubou Sakalouskaya. All rights reserved.
 //
 
+#import <Contacts/Contacts.h>
 #import "ContactsTableViewController.h"
-#import "Contacts/Contacts.h"
 #import "UIColor+ColorFromHex.h"
+#import "AddressBook.h"
 
 NSString * const cellReuseId = @"reuseId";
 
 @interface ContactsTableViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
-@property (strong, nonatomic) NSMutableArray *contacts;
+@property (strong, nonatomic) AddressBook *addressBook;
 
 @end
 
@@ -24,14 +25,14 @@ NSString * const cellReuseId = @"reuseId";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Контакты";
-    self.contacts = [NSMutableArray new];
+    self.addressBook = [AddressBook new];
     if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-        [self loadContacts];
+        [self fetchContacts];
     } else {
         CNContactStore *store = [CNContactStore new];
         [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
             if (granted) {
-                [self loadContacts];
+                [self fetchContacts];
             } else {
                 [self showAccessDeniedScreen];
             }
@@ -44,14 +45,14 @@ NSString * const cellReuseId = @"reuseId";
     self.contactsTableView.rowHeight = 70;
 }
 
-- (void)loadContacts {
+- (void)fetchContacts {
     CNContactStore *contactStore = [CNContactStore new];
     NSArray *keysToFetch = @[CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactImageDataKey, CNContactImageDataAvailableKey];
     CNContactFetchRequest *fetchRequest = [[CNContactFetchRequest alloc] initWithKeysToFetch:keysToFetch];
     [contactStore enumerateContactsWithFetchRequest:fetchRequest
                                               error:nil
                                          usingBlock:^(CNContact * _Nonnull contact, BOOL * _Nonnull stop) {
-                                             [self.contacts addObject:contact];
+                                             [self.addressBook addContact:contact];
                                          }];
 }
 
@@ -85,7 +86,7 @@ NSString * const cellReuseId = @"reuseId";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CNContact *contact = self.contacts[indexPath.row];
+    CNContact *contact = [self.addressBook contactAtIndexPath:indexPath];
     NSMutableString *contactDetails = [NSMutableString stringWithString:@"Контакт"];
     if (contact.givenName.length != 0) {
         [contactDetails appendString:[NSString stringWithFormat:@" %@", contact.givenName]];
@@ -107,19 +108,27 @@ NSString * const cellReuseId = @"reuseId";
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.contacts removeObjectAtIndex:indexPath.row];
+    [self.addressBook removeContactAtIndexPath:indexPath];
     [self.contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self.addressBook numberOfSections];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.contacts.count;
+    return [self.addressBook numberOfContactsInSection:section];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [self.addressBook letterForSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseId forIndexPath:indexPath];
-    CNContact *contact = self.contacts[indexPath.row];
+    CNContact *contact = [self.addressBook contactAtIndexPath:indexPath];
     NSMutableString *fullName = [NSMutableString string];
     if (contact.familyName.length != 0) {
         [fullName appendString:[NSString stringWithFormat:@"%@ ", contact.familyName]];
