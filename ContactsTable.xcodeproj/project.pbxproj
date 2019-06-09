@@ -20,6 +20,8 @@
 		E3FE2F7622ABF18B007159B2 /* AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F7522ABF18B007159B2 /* AddressBook.m */; };
 		E3FE2F7C22AC2B17007159B2 /* LetterSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F7B22AC2B17007159B2 /* LetterSectionView.m */; };
 		E3FE2F8022AC2B70007159B2 /* LetterSectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F7F22AC2B70007159B2 /* LetterSectionView.xib */; };
+		E3FE2F8822AD0303007159B2 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F8622AD0302007159B2 /* ContactTableViewCell.m */; };
+		E3FE2F8922AD0303007159B2 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F8722AD0303007159B2 /* ContactTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,9 @@
 		E3FE2F7A22AC2B17007159B2 /* LetterSectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LetterSectionView.h; sourceTree = "<group>"; };
 		E3FE2F7B22AC2B17007159B2 /* LetterSectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LetterSectionView.m; sourceTree = "<group>"; };
 		E3FE2F7F22AC2B70007159B2 /* LetterSectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LetterSectionView.xib; sourceTree = "<group>"; };
+		E3FE2F8522AD0302007159B2 /* ContactTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactTableViewCell.h; sourceTree = "<group>"; };
+		E3FE2F8622AD0302007159B2 /* ContactTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ContactTableViewCell.m; path = ../ContactTableViewCell.m; sourceTree = "<group>"; };
+		E3FE2F8722AD0303007159B2 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,8 +181,19 @@
 			isa = PBXGroup;
 			children = (
 				E3FE2F7D22AC2B1B007159B2 /* LetterSectionView */,
+				E3FE2F8A22AD030B007159B2 /* ContactTableViewCell */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E3FE2F8A22AD030B007159B2 /* ContactTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				E3FE2F8522AD0302007159B2 /* ContactTableViewCell.h */,
+				E3FE2F8622AD0302007159B2 /* ContactTableViewCell.m */,
+				E3FE2F8722AD0303007159B2 /* ContactTableViewCell.xib */,
+			);
+			path = ContactTableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,6 +253,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3FE2F8922AD0303007159B2 /* ContactTableViewCell.xib in Resources */,
 				E3FE2F5522AA6685007159B2 /* LaunchScreen.storyboard in Resources */,
 				E3FE2F5222AA6685007159B2 /* Assets.xcassets in Resources */,
 				E3FE2F6722AA681E007159B2 /* ContactsTableViewController.xib in Resources */,
@@ -254,6 +271,7 @@
 			files = (
 				E3FE2F5822AA6685007159B2 /* main.m in Sources */,
 				E3FE2F7222ABC963007159B2 /* UIColor+ColorFromHex.m in Sources */,
+				E3FE2F8822AD0303007159B2 /* ContactTableViewCell.m in Sources */,
 				E3FE2F7C22AC2B17007159B2 /* LetterSectionView.m in Sources */,
 				E3FE2F7622ABF18B007159B2 /* AddressBook.m in Sources */,
 				E3FE2F6622AA681E007159B2 /* ContactsTableViewController.m in Sources */,

@@ -11,6 +11,7 @@
 #import "UIColor+ColorFromHex.h"
 #import "AddressBook.h"
 #import "LetterSectionView.h"
+#import "ContactTableViewCell.h"
 
 NSString * const cellReuseId = @"cellReuseId";
 NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
@@ -30,6 +31,11 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     self.navigationItem.title = @"Контакты";
     self.addressBook = [AddressBook new];
     self.sectionsExpanded = [NSMutableArray array];
+    [self tryLoadContacts];
+    [self setupTableView];
+}
+
+- (void)tryLoadContacts{
     if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
         [self fetchContacts];
     } else {
@@ -42,12 +48,6 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
             }
         }];
     }
-    [self.contactsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellReuseId];
-    [self.contactsTableView registerClass:[LetterSectionView class] forHeaderFooterViewReuseIdentifier:sectionHeaderReuseId];
-    self.contactsTableView.tableFooterView = [UIView new];
-    self.contactsTableView.delegate = self;
-    self.contactsTableView.dataSource = self;
-    self.contactsTableView.rowHeight = 70;
 }
 
 - (void)fetchContacts {
@@ -80,6 +80,18 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
                                               [accessDeniedLabel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
                                               [accessDeniedLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:20],
                                               [self.view.trailingAnchor constraintEqualToAnchor:accessDeniedLabel.trailingAnchor constant:20]]];
+}
+
+- (void)setupTableView {
+    UINib *cellNib = [UINib nibWithNibName:NSStringFromClass([ContactTableViewCell class]) bundle:nil];
+    [self.contactsTableView registerNib:cellNib forCellReuseIdentifier:cellReuseId];
+    //[self.contactsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellReuseId];
+    [self.contactsTableView registerClass:[LetterSectionView class] forHeaderFooterViewReuseIdentifier:sectionHeaderReuseId];
+    self.contactsTableView.tableFooterView = [UIView new];
+    self.contactsTableView.delegate = self;
+    self.contactsTableView.dataSource = self;
+    self.contactsTableView.rowHeight = 70;
+    self.contactsTableView.separatorColor = [UIColor colorFromHex:0xDFDFDF];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -151,7 +163,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseId forIndexPath:indexPath];
+    ContactTableViewCell *cell = (ContactTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellReuseId forIndexPath:indexPath];
     CNContact *contact = [self.addressBook contactAtIndexPath:indexPath];
     NSMutableString *fullName = [NSMutableString string];
     if (contact.familyName.length != 0) {
@@ -160,15 +172,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     if (contact.givenName.length != 0) {
         [fullName appendString:[NSString stringWithFormat:@"%@", contact.givenName]];
     }
-    cell.textLabel.text = fullName;
-    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"info"]];
-    UIView *selectedColorBackgroundView = [UIView new];
-    selectedColorBackgroundView.backgroundColor = [UIColor colorFromHex:0xFEF6E6];
-    cell.selectedBackgroundView = selectedColorBackgroundView;
-    cell.backgroundColor = [UIColor colorFromHex:0xFFFFFF];
-    UIFont *system17RegularFont = [UIFont systemFontOfSize:17 weight:UIFontWeightRegular];
-    cell.textLabel.font = system17RegularFont;
-    cell.textLabel.textColor = [UIColor colorFromHex:0x000000];
+    cell.contactNameLabel.text = fullName;
     return cell;
 }
 
