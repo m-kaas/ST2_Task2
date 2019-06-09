@@ -9,20 +9,32 @@
 #import "ContactTableViewCell.h"
 #import "UIColor+ColorFromHex.h"
 
-@interface ContactTableViewCell ()
-
-@property (weak, nonatomic) IBOutlet UIImageView *infoImageView;
-
-@end
-
 @implementation ContactTableViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    UIView *selectedColorBackgroundView = [UIView new];
-    selectedColorBackgroundView.backgroundColor = [UIColor colorFromHex:0xFEF6E6];
-    self.selectedBackgroundView = selectedColorBackgroundView;
-    self.infoImageView.image = [UIImage imageNamed:@"info"];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        UIView *selectedColorBackgroundView = [UIView new];
+        selectedColorBackgroundView.backgroundColor = [UIColor colorFromHex:0xFEF6E6];
+        self.selectedBackgroundView = selectedColorBackgroundView;
+        UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [infoButton setImage:[UIImage imageNamed:@"info"] forState:UIControlStateNormal];
+        [infoButton addTarget:self action:@selector(onInfoButton:) forControlEvents:UIControlEventTouchUpInside];
+        self.accessoryView = infoButton;
+    }
+    return self;
+}
+
+- (void)onInfoButton:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(didTapOnInfoButtonInCell:)]) {
+        [self.delegate didTapOnInfoButtonInCell:self];
+    }
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.accessoryView.frame = CGRectMake(self.accessoryView.superview.bounds.size.width - 45, (self.accessoryView.superview.bounds.size.height - 25) / 2, 25, 25);
+    self.textLabel.frame = CGRectMake(25, self.textLabel.frame.origin.y, self.textLabel.frame.size.width - 25, self.textLabel.frame.size.height);
 }
 
 @end

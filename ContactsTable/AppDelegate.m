@@ -24,6 +24,9 @@
     UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:contactsTableVC];
     navCon.navigationBar.barTintColor = [UIColor colorFromHex:0xFFFFFF];
     navCon.navigationBar.translucent = NO;
+    UIImage *arrowLeftImage = [[UIImage imageNamed:@"arrow_left"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    navCon.navigationBar.backIndicatorImage = arrowLeftImage;
+    navCon.navigationBar.backIndicatorTransitionMaskImage = arrowLeftImage;
     [navCon.navigationBar setTitleTextAttributes:@{
                                                    NSForegroundColorAttributeName: [UIColor colorFromHex:0x000000],
                                                    NSFontAttributeName: [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold]

@@ -12,11 +12,12 @@
 #import "AddressBook.h"
 #import "LetterSectionView.h"
 #import "ContactTableViewCell.h"
+#import "ContactDetailsViewController.h"
 
 NSString * const cellReuseId = @"cellReuseId";
 NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 
-@interface ContactsTableViewController () <UITableViewDelegate, UITableViewDataSource, LetterSectionViewDelegate>
+@interface ContactsTableViewController () <UITableViewDelegate, UITableViewDataSource, LetterSectionViewDelegate, ContactTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
 @property (strong, nonatomic) AddressBook *addressBook;
@@ -32,7 +33,8 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     self.addressBook = [AddressBook new];
     self.sectionsExpanded = [NSMutableArray array];
     [self tryLoadContacts];
-    [self setupTableView];
+    [self setupContactsTableView];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)tryLoadContacts{
@@ -82,19 +84,16 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
                                               [self.view.trailingAnchor constraintEqualToAnchor:accessDeniedLabel.trailingAnchor constant:20]]];
 }
 
-- (void)setupTableView {
-    UINib *cellNib = [UINib nibWithNibName:NSStringFromClass([ContactTableViewCell class]) bundle:nil];
-    [self.contactsTableView registerNib:cellNib forCellReuseIdentifier:cellReuseId];
-    //[self.contactsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellReuseId];
+- (void)setupContactsTableView {
+    [self.contactsTableView registerClass:[ContactTableViewCell class] forCellReuseIdentifier:cellReuseId];
     [self.contactsTableView registerClass:[LetterSectionView class] forHeaderFooterViewReuseIdentifier:sectionHeaderReuseId];
     self.contactsTableView.tableFooterView = [UIView new];
-    self.contactsTableView.delegate = self;
-    self.contactsTableView.dataSource = self;
     self.contactsTableView.rowHeight = 70;
     self.contactsTableView.separatorColor = [UIColor colorFromHex:0xDFDFDF];
 }
 
 - (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     if (self.contactsTableView.contentSize.height <= self.contactsTableView.bounds.size.height) {
         self.contactsTableView.scrollEnabled = NO;
     } else {
@@ -108,11 +107,11 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CNContact *contact = [self.addressBook contactAtIndexPath:indexPath];
     NSMutableString *contactDetails = [NSMutableString stringWithString:@"Контакт"];
-    if (contact.givenName.length != 0) {
-        [contactDetails appendString:[NSString stringWithFormat:@" %@", contact.givenName]];
-    }
     if (contact.familyName.length != 0) {
         [contactDetails appendString:[NSString stringWithFormat:@" %@", contact.familyName]];
+    }
+    if (contact.givenName.length != 0) {
+        [contactDetails appendString:[NSString stringWithFormat:@" %@", contact.givenName]];
     }
     if (contact.phoneNumbers.count != 0) {
         [contactDetails appendString:[NSString stringWithFormat:@", номер телефона %@", contact.phoneNumbers.firstObject.value.stringValue]];
@@ -134,10 +133,6 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 60;
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    //TODO: present details VC
 }
 
 #pragma mark - UITableViewDataSource
@@ -172,7 +167,9 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     if (contact.givenName.length != 0) {
         [fullName appendString:[NSString stringWithFormat:@"%@", contact.givenName]];
     }
-    cell.contactNameLabel.text = fullName;
+    cell.textLabel.text = fullName;
+    cell.indexPath = indexPath;
+    cell.delegate = self;
     return cell;
 }
 
@@ -195,6 +192,15 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
         }
         [self.contactsTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationAutomatic];
     }
+}
+
+#pragma mark - ContactTableViewCellDelegate
+
+- (void)didTapOnInfoButtonInCell:(ContactTableViewCell *)cell {
+    CNContact *contact = [self.addressBook contactAtIndexPath:cell.indexPath];
+    ContactDetailsViewController *detailsVC = [ContactDetailsViewController new];
+    detailsVC.contact = contact;
+    [self.navigationController pushViewController:detailsVC animated:YES];
 }
 
 @end

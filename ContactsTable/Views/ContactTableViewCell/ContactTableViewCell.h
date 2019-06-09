@@ -10,9 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class ContactTableViewCell;
+
+@protocol ContactTableViewCellDelegate <NSObject>
+
+- (void)didTapOnInfoButtonInCell:(ContactTableViewCell *)cell;
+
+@end
+
 @interface ContactTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *contactNameLabel;
+@property (weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
+@property (strong, nonatomic) NSIndexPath *indexPath;
 
 @end
 
