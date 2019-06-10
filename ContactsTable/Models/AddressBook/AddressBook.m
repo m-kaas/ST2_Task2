@@ -13,21 +13,11 @@
 @interface AddressBook ()
 
 @property (strong, nonatomic) NSMutableDictionary *contactsByLetter;
+@property (copy, nonatomic) NSArray *sortedKeyLetters;
 
 @end
 
 @implementation AddressBook
-
-- (NSInteger)numberOfSections {
-    return self.contactsByLetter.count;
-}
-
-- (NSInteger)numberOfContactsInSection:(NSInteger)section {
-    NSArray *sortedLetters = [self sortedKeyLetters];
-    NSString *sectionKey = sortedLetters[section];
-    NSInteger numberOfContacts = [(NSArray *)self.contactsByLetter[sectionKey] count];
-    return numberOfContacts;
-}
 
 - (void)addContact:(CNContact *)contact {
     if (!self.contactsByLetter) {
@@ -44,6 +34,7 @@
         section = [NSMutableArray array];
         [section addObject:contact];
         [self.contactsByLetter addEntriesFromDictionary:@{sectionKey: section}];
+        [self updateSortedKeyLetters];
         return;
     }
     section = self.contactsByLetter[sectionKey];
@@ -60,36 +51,43 @@
 }
 
 - (void)removeContactAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sortedLetters = [self sortedKeyLetters];
-    NSString *sectionKey = sortedLetters[indexPath.section];
+    NSString *sectionKey = self.sortedKeyLetters[indexPath.section];
     NSMutableArray *section = self.contactsByLetter[sectionKey];
     [section removeObjectAtIndex:indexPath.row];
     if (section.count == 0) {
         [self.contactsByLetter removeObjectForKey:sectionKey];
+        [self updateSortedKeyLetters];
     }
 }
 
+- (NSInteger)numberOfSections {
+    return self.contactsByLetter.count;
+}
+
+- (NSInteger)numberOfContactsInSection:(NSInteger)section {
+    NSString *sectionKey = self.sortedKeyLetters[section];
+    NSInteger numberOfContacts = [(NSArray *)self.contactsByLetter[sectionKey] count];
+    return numberOfContacts;
+}
+
 - (CNContact *)contactAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sortedLetters = [self sortedKeyLetters];
-    NSString *sectionKey = sortedLetters[indexPath.section];
+    NSString *sectionKey = self.sortedKeyLetters[indexPath.section];
     NSArray *section = self.contactsByLetter[sectionKey];
     CNContact *contact = section[indexPath.row];
     return contact;
 }
 
 - (NSString *)letterForSection:(NSInteger)section {
-    NSArray *sortedLetters = [self sortedKeyLetters];
-    NSString *letter = [sortedLetters[section] uppercaseString];
-    return letter;
+    return [self.sortedKeyLetters[section] uppercaseString];
 }
 
-- (NSArray *)sortedKeyLetters {
+- (void)updateSortedKeyLetters {
     NSString *letters = @"абвгдеёжзиклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyz#";
     NSArray *keyLetters = self.contactsByLetter.allKeys;
     NSArray *sortedKeyLetters = [keyLetters sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         return [letters rangeOfString:obj1].location > [letters rangeOfString:obj2].location;
     }];
-    return sortedKeyLetters;
+    self.sortedKeyLetters = sortedKeyLetters;
 }
 
 @end

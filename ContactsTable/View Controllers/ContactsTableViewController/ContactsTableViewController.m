@@ -109,16 +109,17 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.addressBook removeContactAtIndexPath:indexPath];
-        NSIndexSet *sectionIndex = [NSIndexSet indexSetWithIndex:indexPath.section];
         if ([self.contactsTableView numberOfRowsInSection:indexPath.section] == 1) {
-            [self.contactsTableView deleteSections:sectionIndex withRowAnimation:UITableViewRowAnimationFade];
+            NSIndexSet *sectionIndex = [NSIndexSet indexSetWithIndex:indexPath.section];
+            [self.contactsTableView deleteSections:sectionIndex withRowAnimation:UITableViewRowAnimationTop];
         } else {
-            [self.contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            //[self.contactsTableView reloadSections:sectionIndex withRowAnimation:UITableViewRowAnimationAutomatic];
-            //delete section = wrong section number in other sections
-            [self.contactsTableView reloadData];
+            [self.contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         }
     }
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.contactsTableView reloadData];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -175,13 +176,13 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
         for (int i = 0; i < [self.addressBook numberOfContactsInSection:sectionView.section]; i++) {
             [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionView.section]];
         }
-        [self.contactsTableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.contactsTableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationTop];
     } else {
         NSMutableArray *indexPathsToInsert = [NSMutableArray array];
         for (int i = 0; i < [self.addressBook numberOfContactsInSection:sectionView.section]; i++) {
             [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionView.section]];
         }
-        [self.contactsTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.contactsTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationTop];
     }
 }
 

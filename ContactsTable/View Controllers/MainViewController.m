@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "UIColor+ColorFromHex.h"
+#import "UIColor+OnePtImage.h"
 
 @interface MainViewController ()
 
@@ -17,8 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationBar.barTintColor = [UIColor colorFromHex:0xFFFFFF];
     self.navigationBar.translucent = NO;
+    self.navigationBar.barTintColor = [UIColor colorFromHex:0xFFFFFF];
+    self.navigationBar.shadowImage = [[UIColor colorFromHex:0xE6E6E6] onePtImage];
     UIImage *arrowLeftImage = [[UIImage imageNamed:@"arrow_left"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.navigationBar.backIndicatorImage = arrowLeftImage;
     self.navigationBar.backIndicatorTransitionMaskImage = arrowLeftImage;
