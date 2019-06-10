@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
 @property (strong, nonatomic) NSIndexPath *indexPath;
+@property (assign, nonatomic) BOOL showsInfoButton;
 
 @end
 

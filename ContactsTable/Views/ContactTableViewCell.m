@@ -21,8 +21,16 @@
         [infoButton setImage:[UIImage imageNamed:@"info"] forState:UIControlStateNormal];
         [infoButton addTarget:self action:@selector(onInfoButton:) forControlEvents:UIControlEventTouchUpInside];
         self.accessoryView = infoButton;
+        self.accessoryView.hidden = YES;
     }
     return self;
+}
+
+- (void)setShowsInfoButton:(BOOL)showsInfoButton {
+    if (_showsInfoButton != showsInfoButton) {
+        _showsInfoButton = showsInfoButton;
+        self.accessoryView.hidden = !showsInfoButton;
+    }
 }
 
 - (void)onInfoButton:(id)sender {
@@ -33,8 +41,10 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.accessoryView.frame = CGRectMake(self.accessoryView.superview.bounds.size.width - 45, (self.accessoryView.superview.bounds.size.height - 25) / 2, 25, 25);
-    self.textLabel.frame = CGRectMake(25, self.textLabel.frame.origin.y, self.textLabel.frame.size.width - 25, self.textLabel.frame.size.height);
+    if (self.showsInfoButton) {
+        self.accessoryView.frame = CGRectMake(self.accessoryView.superview.bounds.size.width - 45, (self.accessoryView.superview.bounds.size.height - 25) / 2, 25, 25);
+    }
+    self.textLabel.frame = CGRectMake(25, self.textLabel.frame.origin.y, self.textLabel.frame.size.width - (self.showsInfoButton ? 25 : 0), self.textLabel.frame.size.height);
 }
 
 @end

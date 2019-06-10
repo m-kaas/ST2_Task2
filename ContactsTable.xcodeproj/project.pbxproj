@@ -24,6 +24,7 @@
 		E3FE2F8F22AD0D9E007159B2 /* ContactDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F8D22AD0D9E007159B2 /* ContactDetailsViewController.xib */; };
 		E3FE2F9322AD3F6C007159B2 /* ContactDetailsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F9222AD3F6C007159B2 /* ContactDetailsHeaderView.m */; };
 		E3FE2F9622AD3F9D007159B2 /* ContactDetailsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FE2F9522AD3F9D007159B2 /* ContactDetailsHeaderView.xib */; };
+		E3FE2F9922AE1BAA007159B2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE2F9822AE1BAA007159B2 /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,8 @@
 		E3FE2F9122AD3F6C007159B2 /* ContactDetailsHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ContactDetailsHeaderView.h; path = ../ContactDetailsHeaderView.h; sourceTree = "<group>"; };
 		E3FE2F9222AD3F6C007159B2 /* ContactDetailsHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ContactDetailsHeaderView.m; path = ../ContactDetailsHeaderView.m; sourceTree = "<group>"; };
 		E3FE2F9522AD3F9D007159B2 /* ContactDetailsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactDetailsHeaderView.xib; sourceTree = "<group>"; };
+		E3FE2F9722AE1BAA007159B2 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
+		E3FE2F9822AE1BAA007159B2 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../MainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +128,7 @@
 			children = (
 				E3FE2F6822AA694B007159B2 /* ContactsTableViewController */,
 				E3FE2F9022AD0DA3007159B2 /* ContactDetailsViewController */,
+				E3FE2F9A22AE1BAF007159B2 /* MainViewController */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -223,6 +227,15 @@
 			path = ContactDetailsHeaderView;
 			sourceTree = "<group>";
 		};
+		E3FE2F9A22AE1BAF007159B2 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E3FE2F9722AE1BAA007159B2 /* MainViewController.h */,
+				E3FE2F9822AE1BAA007159B2 /* MainViewController.m */,
+			);
+			path = MainViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -300,6 +313,7 @@
 				E3FE2F5822AA6685007159B2 /* main.m in Sources */,
 				E3FE2F7222ABC963007159B2 /* UIColor+ColorFromHex.m in Sources */,
 				E3FE2F8E22AD0D9E007159B2 /* ContactDetailsViewController.m in Sources */,
+				E3FE2F9922AE1BAA007159B2 /* MainViewController.m in Sources */,
 				E3FE2F8822AD0303007159B2 /* ContactTableViewCell.m in Sources */,
 				E3FE2F7C22AC2B17007159B2 /* LetterSectionView.m in Sources */,
 				E3FE2F9322AD3F6C007159B2 /* ContactDetailsHeaderView.m in Sources */,

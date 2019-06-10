@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ContactsTableViewController.h"
 #import "UIColor+ColorFromHex.h"
+#import "MainViewController.h"
 
 @interface AppDelegate ()
 
@@ -21,16 +22,7 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     ContactsTableViewController *contactsTableVC = [[ContactsTableViewController alloc] initWithNibName:NSStringFromClass([ContactsTableViewController class]) bundle:nil];
-    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:contactsTableVC];
-    navCon.navigationBar.barTintColor = [UIColor colorFromHex:0xFFFFFF];
-    navCon.navigationBar.translucent = NO;
-    UIImage *arrowLeftImage = [[UIImage imageNamed:@"arrow_left"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    navCon.navigationBar.backIndicatorImage = arrowLeftImage;
-    navCon.navigationBar.backIndicatorTransitionMaskImage = arrowLeftImage;
-    [navCon.navigationBar setTitleTextAttributes:@{
-                                                   NSForegroundColorAttributeName: [UIColor colorFromHex:0x000000],
-                                                   NSFontAttributeName: [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold]
-                                                   }];
+    MainViewController *navCon = [[MainViewController alloc] initWithRootViewController:contactsTableVC];
     [self.window setRootViewController: navCon];
     [self.window makeKeyAndVisible];
     return YES;

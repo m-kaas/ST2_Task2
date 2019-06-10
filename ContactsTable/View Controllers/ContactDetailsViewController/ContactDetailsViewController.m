@@ -9,6 +9,7 @@
 #import "ContactDetailsViewController.h"
 #import "ContactDetailsHeaderView.h"
 #import "UIColor+ColorFromHex.h"
+#import "ContactTableViewCell.h"
 
 NSString * const phoneCellReuseId = @"phoneCellReuseId";
 
@@ -46,7 +47,7 @@ NSString * const phoneCellReuseId = @"phoneCellReuseId";
     self.detailsTableView.tableFooterView = [UIView new];
     self.detailsTableView.rowHeight = 70;
     self.detailsTableView.separatorColor = [UIColor colorFromHex:0xDFDFDF];
-    [self.detailsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:phoneCellReuseId];
+    [self.detailsTableView registerClass:[ContactTableViewCell class] forCellReuseIdentifier:phoneCellReuseId];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -75,8 +76,9 @@ NSString * const phoneCellReuseId = @"phoneCellReuseId";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:phoneCellReuseId forIndexPath:indexPath];
+    ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:phoneCellReuseId forIndexPath:indexPath];
     cell.textLabel.text = self.contact.phoneNumbers[indexPath.row].value.stringValue;
+    cell.showsInfoButton = NO;
     return cell;
 }
 

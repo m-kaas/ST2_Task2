@@ -39,15 +39,15 @@
 - (void)setExpanded:(BOOL)expanded {
     if (_expanded != expanded) {
         _expanded = expanded;
-        if (expanded) {
-            self.letterLabel.textColor = [UIColor colorFromHex:0x000000];
-            self.contactsCountLabel.textColor = [UIColor colorFromHex:0x999999];
-            self.arrowImageView.image = [UIImage imageNamed:@"arrow_down"];
-        } else {
-            self.letterLabel.textColor = [UIColor colorFromHex:0xD99100];
-            self.contactsCountLabel.textColor = [UIColor colorFromHex:0xD99100];
-            self.arrowImageView.image = [UIImage imageNamed:@"arrow_up"];
-        }
+    }
+    if (expanded) {
+        self.letterLabel.textColor = [UIColor colorFromHex:0x000000];
+        self.contactsCountLabel.textColor = [UIColor colorFromHex:0x999999];
+        self.arrowImageView.image = [UIImage imageNamed:@"arrow_down"];
+    } else {
+        self.letterLabel.textColor = [UIColor colorFromHex:0xD99100];
+        self.contactsCountLabel.textColor = [UIColor colorFromHex:0xD99100];
+        self.arrowImageView.image = [UIImage imageNamed:@"arrow_up"];
     }
 }
 

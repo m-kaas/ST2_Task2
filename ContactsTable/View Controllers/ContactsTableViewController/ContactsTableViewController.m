@@ -30,26 +30,21 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Контакты";
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.addressBook = [AddressBook new];
     self.sectionsExpanded = [NSMutableArray array];
-    [self tryLoadContacts];
     [self setupContactsTableView];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-}
-
-- (void)tryLoadContacts{
-    if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-        [self fetchContacts];
-    } else {
-        CNContactStore *store = [CNContactStore new];
-        [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
-            if (granted) {
-                [self fetchContacts];
-            } else {
-                [self showAccessDeniedScreen];
-            }
-        }];
-    }
+    CNContactStore *store = [CNContactStore new];
+    [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (granted) {
+            [self fetchContacts];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.contactsTableView reloadData];
+            });
+        } else {
+            [self showAccessDeniedScreen];
+        }
+    }];
 }
 
 - (void)fetchContacts {
@@ -92,15 +87,6 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     self.contactsTableView.separatorColor = [UIColor colorFromHex:0xDFDFDF];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    if (self.contactsTableView.contentSize.height <= self.contactsTableView.bounds.size.height) {
-        self.contactsTableView.scrollEnabled = NO;
-    } else {
-        self.contactsTableView.scrollEnabled = YES;
-    }
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -122,13 +108,17 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete;
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.addressBook removeContactAtIndexPath:indexPath];
-    [self.contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.addressBook removeContactAtIndexPath:indexPath];
+        NSIndexSet *sectionIndex = [NSIndexSet indexSetWithIndex:indexPath.section];
+        if ([self.contactsTableView numberOfRowsInSection:indexPath.section] == 1) {
+            [self.contactsTableView deleteSections:sectionIndex withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            [self.contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.contactsTableView reloadSections:sectionIndex withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -158,7 +148,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ContactTableViewCell *cell = (ContactTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellReuseId forIndexPath:indexPath];
+    ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseId forIndexPath:indexPath];
     CNContact *contact = [self.addressBook contactAtIndexPath:indexPath];
     NSMutableString *fullName = [NSMutableString string];
     if (contact.familyName.length != 0) {
@@ -168,6 +158,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
         [fullName appendString:[NSString stringWithFormat:@"%@", contact.givenName]];
     }
     cell.textLabel.text = fullName;
+    cell.showsInfoButton = YES;
     cell.indexPath = indexPath;
     cell.delegate = self;
     return cell;

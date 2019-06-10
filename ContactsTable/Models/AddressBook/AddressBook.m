@@ -64,6 +64,9 @@
     NSString *sectionKey = sortedLetters[indexPath.section];
     NSMutableArray *section = self.contactsByLetter[sectionKey];
     [section removeObjectAtIndex:indexPath.row];
+    if (section.count == 0) {
+        [self.contactsByLetter removeObjectForKey:sectionKey];
+    }
 }
 
 - (CNContact *)contactAtIndexPath:(NSIndexPath *)indexPath {
