@@ -29,8 +29,8 @@
 - (void)setShowsInfoButton:(BOOL)showsInfoButton {
     if (_showsInfoButton != showsInfoButton) {
         _showsInfoButton = showsInfoButton;
-        self.accessoryView.hidden = !showsInfoButton;
     }
+    self.accessoryView.hidden = !showsInfoButton;
 }
 
 - (void)onInfoButton:(id)sender {

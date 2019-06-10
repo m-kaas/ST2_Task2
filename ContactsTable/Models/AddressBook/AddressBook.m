@@ -23,7 +23,7 @@
 }
 
 - (NSInteger)numberOfContactsInSection:(NSInteger)section {
-    NSArray *sortedLetters = [self.contactsByLetter.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray *sortedLetters = [self sortedKeyLetters];
     NSString *sectionKey = sortedLetters[section];
     NSInteger numberOfContacts = [(NSArray *)self.contactsByLetter[sectionKey] count];
     return numberOfContacts;
@@ -33,14 +33,14 @@
     if (!self.contactsByLetter) {
         self.contactsByLetter = [NSMutableDictionary dictionary];
     }
-    NSArray *sortedLetters = [self.contactsByLetter.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     NSString *stringToCompare = contact.familyName.length != 0 ? contact.familyName : contact.givenName;
     NSString *sectionKey = [[stringToCompare substringToIndex:1] lowercaseString];
-    if (!sectionKey || ![@"abcdefghijklmnopqrstuvwxyzабвгдеёжзиклмнопрстуфхцчшщъыьэюя" containsString:sectionKey]) {
+    NSString *letters = @"абвгдеёжзиклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyz";
+    if (!sectionKey || [letters rangeOfString:sectionKey].location == NSNotFound) {
         sectionKey = @"#";
     }
     NSMutableArray *section;
-    if (![sortedLetters containsObject:sectionKey]) {
+    if (![self.contactsByLetter.allKeys containsObject:sectionKey]) {
         section = [NSMutableArray array];
         [section addObject:contact];
         [self.contactsByLetter addEntriesFromDictionary:@{sectionKey: section}];
@@ -60,7 +60,7 @@
 }
 
 - (void)removeContactAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sortedLetters = [self.contactsByLetter.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray *sortedLetters = [self sortedKeyLetters];
     NSString *sectionKey = sortedLetters[indexPath.section];
     NSMutableArray *section = self.contactsByLetter[sectionKey];
     [section removeObjectAtIndex:indexPath.row];
@@ -70,7 +70,7 @@
 }
 
 - (CNContact *)contactAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *sortedLetters = [self.contactsByLetter.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray *sortedLetters = [self sortedKeyLetters];
     NSString *sectionKey = sortedLetters[indexPath.section];
     NSArray *section = self.contactsByLetter[sectionKey];
     CNContact *contact = section[indexPath.row];
@@ -78,9 +78,18 @@
 }
 
 - (NSString *)letterForSection:(NSInteger)section {
-    NSArray *sortedLetters = [self.contactsByLetter.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray *sortedLetters = [self sortedKeyLetters];
     NSString *letter = [sortedLetters[section] uppercaseString];
     return letter;
+}
+
+- (NSArray *)sortedKeyLetters {
+    NSString *letters = @"абвгдеёжзиклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyz#";
+    NSArray *keyLetters = self.contactsByLetter.allKeys;
+    NSArray *sortedKeyLetters = [keyLetters sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        return [letters rangeOfString:obj1].location > [letters rangeOfString:obj2].location;
+    }];
+    return sortedKeyLetters;
 }
 
 @end

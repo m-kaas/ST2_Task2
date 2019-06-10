@@ -38,9 +38,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
         if (granted) {
             [self fetchContacts];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.contactsTableView reloadData];
-            });
+            dispatch_async(dispatch_get_main_queue(), ^{ [self.contactsTableView reloadData]; });
         } else {
             [self showAccessDeniedScreen];
         }
@@ -116,7 +114,9 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
             [self.contactsTableView deleteSections:sectionIndex withRowAnimation:UITableViewRowAnimationFade];
         } else {
             [self.contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [self.contactsTableView reloadSections:sectionIndex withRowAnimation:UITableViewRowAnimationAutomatic];
+            //[self.contactsTableView reloadSections:sectionIndex withRowAnimation:UITableViewRowAnimationAutomatic];
+            //delete section = wrong section number in other sections
+            [self.contactsTableView reloadData];
         }
     }
 }

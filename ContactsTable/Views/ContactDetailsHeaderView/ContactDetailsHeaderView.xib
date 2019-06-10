@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bz6-qV-AHG">
-                    <rect key="frame" x="25" y="244" width="340" height="27.5"/>
+                    <rect key="frame" x="25" y="244" width="340" height="73"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -49,7 +49,7 @@
                 <constraint firstItem="UY7-wq-Joo" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="LzD-fQ-36t"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="xa2-Kg-k5V" secondAttribute="bottom" id="SmX-nH-Xq3"/>
                 <constraint firstItem="UY7-wq-Joo" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="25" id="TIp-3V-Xh1"/>
-                <constraint firstItem="xa2-Kg-k5V" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bz6-qV-AHG" secondAttribute="bottom" constant="25" id="ck7-iP-tM2"/>
+                <constraint firstItem="xa2-Kg-k5V" firstAttribute="top" secondItem="bz6-qV-AHG" secondAttribute="bottom" constant="25" id="ck7-iP-tM2"/>
                 <constraint firstItem="bz6-qV-AHG" firstAttribute="top" secondItem="UY7-wq-Joo" secondAttribute="bottom" constant="25" id="hHu-4P-fcS"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bz6-qV-AHG" secondAttribute="trailing" constant="25" id="y52-Wn-fsK"/>
                 <constraint firstItem="bz6-qV-AHG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="25" id="zNL-bh-aZy"/>
