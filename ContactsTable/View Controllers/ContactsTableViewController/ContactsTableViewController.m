@@ -87,6 +87,14 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
 
 #pragma mark - UITableViewDelegate
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 70;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
+    return 60;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CNContact *contact = [self.addressBook contactAtIndexPath:indexPath];
@@ -110,6 +118,7 @@ NSString * const sectionHeaderReuseId = @"sectionHeaderReuseId";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.addressBook removeContactAtIndexPath:indexPath];
         if ([self.contactsTableView numberOfRowsInSection:indexPath.section] == 1) {
+            [self.sectionsExpanded removeObjectAtIndex:indexPath.section];
             NSIndexSet *sectionIndex = [NSIndexSet indexSetWithIndex:indexPath.section];
             [self.contactsTableView deleteSections:sectionIndex withRowAnimation:UITableViewRowAnimationTop];
         } else {
